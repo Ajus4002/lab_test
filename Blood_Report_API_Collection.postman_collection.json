@@ -1,0 +1,1016 @@
+{
+	"info": {
+		"_postman_id": "blood-report-api-collection",
+		"name": "Blood Report Management System API",
+		"description": "Complete API collection for the Blood Report Management System including authentication, patients, blood reports, and dashboard endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user in the system"
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login user and get JWT token"
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Get current user profile (requires authentication)"
+					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.updated@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Update current user profile (requires authentication)"
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"change-password"
+							]
+						},
+						"description": "Change user password (requires authentication)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "Create Patient (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Smith\",\n  \"age\": 35,\n  \"gender\": \"female\",\n  \"phone\": \"+1234567890\",\n  \"email\": \"jane.smith@example.com\",\n  \"address\": \"123 Main St, City, State\",\n  \"bloodGroup\": \"O+\",\n  \"emergencyContact\": {\n    \"name\": \"John Smith\",\n    \"phone\": \"+1234567891\",\n    \"relationship\": \"Spouse\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients"
+							]
+						},
+						"description": "Create a new patient (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Get All Patients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/patients?page=1&limit=10&sortBy=createdAt&sortOrder=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc"
+								}
+							]
+						},
+						"description": "Get all patients with pagination and sorting (requires authentication)"
+					}
+				},
+				{
+					"name": "Search Patients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/patients/search?query=jane&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "jane"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search patients by name, email, or phone (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Patient by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/patients/{{patient_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								"{{patient_id}}"
+							]
+						},
+						"description": "Get patient details by ID (requires authentication)"
+					}
+				},
+				{
+					"name": "Update Patient (Admin Only)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Smith Updated\",\n  \"age\": 36,\n  \"phone\": \"+1234567899\",\n  \"address\": \"456 Oak St, City, State\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/patients/{{patient_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								"{{patient_id}}"
+							]
+						},
+						"description": "Update patient information (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Delete Patient (Admin Only)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/patients/{{patient_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								"{{patient_id}}"
+							]
+						},
+						"description": "Delete a patient (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Get Patient Statistics (Admin Only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/patients/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patients",
+								"stats"
+							]
+						},
+						"description": "Get patient statistics (requires admin authentication)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Blood Reports",
+			"item": [
+				{
+					"name": "Create Blood Report (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patientId\": \"{{patient_id}}\",\n  \"reportDate\": \"2024-01-15\",\n  \"tests\": [\n    {\n      \"testName\": \"Complete Blood Count\",\n      \"testValue\": \"5.2\",\n      \"unit\": \"million/μL\",\n      \"referenceRange\": \"4.5-5.5\",\n      \"status\": \"normal\"\n    },\n    {\n      \"testName\": \"Hemoglobin\",\n      \"testValue\": \"14.2\",\n      \"unit\": \"g/dL\",\n      \"referenceRange\": \"13.5-17.5\",\n      \"status\": \"normal\"\n    }\n  ],\n  \"status\": \"completed\",\n  \"notes\": \"Patient shows normal blood parameters\",\n  \"technician\": \"Dr. Johnson\",\n  \"verifiedBy\": \"Dr. Smith\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports"
+							]
+						},
+						"description": "Create a new blood report (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Get All Blood Reports",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports?page=1&limit=10&status=completed&sortBy=reportDate&sortOrder=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "completed"
+								},
+								{
+									"key": "sortBy",
+									"value": "reportDate"
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc"
+								}
+							]
+						},
+						"description": "Get all blood reports with pagination and filtering (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Blood Report by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/{{report_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"{{report_id}}"
+							]
+						},
+						"description": "Get blood report details by ID (requires authentication)"
+					}
+				},
+				{
+					"name": "Update Blood Report (Admin Only)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"verified\",\n  \"notes\": \"Report verified and approved\",\n  \"verifiedBy\": \"Dr. Smith\",\n  \"verificationDate\": \"2024-01-16\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/{{report_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"{{report_id}}"
+							]
+						},
+						"description": "Update blood report (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Delete Blood Report (Admin Only)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/{{report_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"{{report_id}}"
+							]
+						},
+						"description": "Delete a blood report (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Bulk Delete Reports (Admin Only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reportIds\": [\"{{report_id_1}}\", \"{{report_id_2}}\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/bulk-delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"bulk-delete"
+							]
+						},
+						"description": "Delete multiple blood reports (requires admin authentication)"
+					}
+				},
+				{
+					"name": "Get Reports by Date Range",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/date-range?startDate=2024-01-01&endDate=2024-01-31&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"date-range"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-01-31"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get blood reports within a date range (requires authentication)"
+					}
+				},
+				{
+					"name": "Preview Report",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/{{report_id}}/preview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"{{report_id}}",
+								"preview"
+							]
+						},
+						"description": "Preview blood report (requires authentication)"
+					}
+				},
+				{
+					"name": "Generate PDF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/{{report_id}}/pdf",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"{{report_id}}",
+								"pdf"
+							]
+						},
+						"description": "Generate PDF of blood report (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Report Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/blood-reports/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blood-reports",
+								"stats"
+							]
+						},
+						"description": "Get blood report statistics (requires authentication)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"stats"
+							]
+						},
+						"description": "Get overall dashboard statistics (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Monthly Trend",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/monthly-trend?year=2024",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"monthly-trend"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2024"
+								}
+							]
+						},
+						"description": "Get monthly trend data for a specific year (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Gender Distribution",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/gender-distribution",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"gender-distribution"
+							]
+						},
+						"description": "Get patient gender distribution statistics (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Age Group Distribution",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/age-group-distribution",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"age-group-distribution"
+							]
+						},
+						"description": "Get patient age group distribution statistics (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Reports by Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/reports-by-status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"reports-by-status"
+							]
+						},
+						"description": "Get blood reports grouped by status (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Top Tests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/top-tests?limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"top-tests"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get most frequently ordered tests (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Patient Growth",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/patient-growth?period=monthly&year=2024",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"patient-growth"
+							],
+							"query": [
+								{
+									"key": "period",
+									"value": "monthly"
+								},
+								{
+									"key": "year",
+									"value": "2024"
+								}
+							]
+						},
+						"description": "Get patient growth statistics over time (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Custom Date Range Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/custom-date-range?startDate=2024-01-01&endDate=2024-01-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"custom-date-range"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-01-31"
+								}
+							]
+						},
+						"description": "Get statistics for a custom date range (requires authentication)"
+					}
+				},
+				{
+					"name": "Get Summary Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/dashboard/summary",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"summary"
+							]
+						},
+						"description": "Get summary statistics for the dashboard (requires authentication)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health"
+							]
+						},
+						"description": "Check if the API is running"
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		},
+		{
+			"key": "patient_id",
+			"value": "patient_id_here",
+			"type": "string"
+		},
+		{
+			"key": "report_id",
+			"value": "report_id_here",
+			"type": "string"
+		},
+		{
+			"key": "report_id_1",
+			"value": "first_report_id_here",
+			"type": "string"
+		},
+		{
+			"key": "report_id_2",
+			"value": "second_report_id_here",
+			"type": "string"
+		}
+	]
+}
+

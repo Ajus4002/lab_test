@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#dc2626"/>
+  <circle cx="96" cy="96" r="80" fill="#991b1b" stroke="#7f1d1d" stroke-width="4"/>
+  <path d="M60 80 L96 120 L132 80" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M70 70 L96 100 L122 70" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="96" y="160" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Blood Reports</text>
+</svg>
