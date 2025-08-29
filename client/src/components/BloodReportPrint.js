@@ -226,7 +226,7 @@ return (
             </div>
             <div>
               <h1 className="text-2xl font-bold text-green-600">SINDHU HOSPITAL</h1>
-              <p className="text-sm text-gray-600">ലബോറട്ടറി</p>
+              <p className="text-sm text-gray-600">Laboratory</p>
               <p className="text-sm text-gray-600">Your Trusted Health Partner</p>
               <p className="text-sm text-gray-600">Mob: +91 1234567890</p>
               <p className="text-sm text-gray-600">Email: info@sindhuhospital.com</p>
@@ -290,11 +290,11 @@ return (
         </div>
         
         {/* Barcode Placeholder */}
-        <div className="flex justify-end mt-4">
+        {/* <div className="flex justify-end mt-4">
           <div className="w-32 h-16 bg-gray-200 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
             <span className="text-xs text-gray-500 text-center">Barcode<br/>Placeholder</span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Test Results Section */}
@@ -319,6 +319,8 @@ return (
                 <tbody>
                   {tests.map((test, index) => (
                     <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                      {/* i want category name for each category */}
+                      
                       <td className="p-3 border-b border-gray-200 text-gray-900 font-medium">
                         {test.testName}
                       </td>
